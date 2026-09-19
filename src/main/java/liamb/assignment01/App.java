@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -11,9 +12,20 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class App extends Application {
+    private static int levelCounter = 1;
 
     @Override
     public void start(Stage stage) {
+        Label textCounter = new Label("1/6");
+        
+        Button nextBtn = new Button("next");
+        nextBtn.setDisable(true);
+        
+        Button resetBtn = new Button("reset");
+        
+        Label typeGuide = new Label();
+        TextField textField = new TextField();
+        
         Button backtickBtn = new Button("~ `");
 
         Button btn1 = new Button("!\n1");
@@ -80,7 +92,31 @@ public class App extends Application {
         Button rightShiftBtn = new Button("shift");
                 
         Button spacebarBtn = new Button("space");
-
+        
+        if (typeGuide.getText() == textField.getText()) {
+            nextBtn.setDisable(false);
+        }
+        
+        nextBtn.setOnAction(event -> {
+            nextBtn.setDisable(true);
+            //set typeGuide to next set
+            textField.setText("");
+            if (textCounter.getText() != "6/6") {
+                textCounter.setText(String.format("%d/6", ++levelCounter));   
+            }
+        });
+        
+        resetBtn.setOnAction(event -> {
+            nextBtn.setDisable(true);
+            //set typeGuide to first set
+            textField.setText("");
+            textCounter.setText("1/6"); 
+            levelCounter = 1;   
+        });
+        
+        HBox topRow = new HBox();
+        topRow.getChildren().setAll(textField, textCounter);
+        
         HBox row1 = new HBox(5);
         row1.getChildren().setAll(backtickBtn, btn1, btn2, btn3,
                 btn4, btn5, btn6, btn7, btn8, btn9, btn0, minusBtn, equalsBtn, deleteBtn);
@@ -96,10 +132,14 @@ public class App extends Application {
         HBox row4 = new HBox(5);
         row4.getChildren().setAll(leftShiftBtn, zBtn, xBtn, cBtn, vBtn,
                 bBtn, nBtn, mBtn, commaBtn, periodBtn, forwardSlashBtn, rightShiftBtn, spacebarBtn);
-
+        
+        HBox row5 = new HBox(5);
+        row4.getChildren().setAll(spacebarBtn, nextBtn);
+         
         VBox root = new VBox(5);
-        root.getChildren().addAll(row1, row2, row3, row4, spacebarBtn);
-        var scene = new Scene(root, 640, 480);
+        root.getChildren().addAll(typeGuide, topRow, row1, row2, row3, row4, row5);
+        var scene = new Scene(root, 900, 400);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
