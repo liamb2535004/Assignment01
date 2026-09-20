@@ -1,5 +1,6 @@
 package liamb.assignment01;
 
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,17 +14,27 @@ import javafx.stage.Stage;
 
 public class App extends Application {
     private static int levelCounter = 1;
+    private static String text1 = "I just wanted to drop by and say hello to everyone in the room.";
+    private static String text2 = "We are looking at a situation where everything needs to be redone from scratch.";
+    private static String text3 = "My head was about to explode when I heard the final project deadline.";
+    private static String text4 = "It is just one of those days where nothing seems to go right.";
+    private static String text5 = "At the end of the day, we all want the exact same positive result for the team.";
+    private static String text6 = "It is not a huge deal if we miss the early morning bus.";
 
     @Override
     public void start(Stage stage) {
+        //make a String list containing all text, so that the next button triggers
+        //the next set of text to be displayed
         Label textCounter = new Label("1/6");
+        
+        Label statusLabel = new Label("Press a key");
         
         Button nextBtn = new Button("next");
         nextBtn.setDisable(true);
         
         Button resetBtn = new Button("reset");
         
-        Label typeGuide = new Label();
+        Label typeGuide = new Label(text1);
         TextField textField = new TextField();
         
         Button backtickBtn = new Button("~ `");
@@ -100,22 +111,23 @@ public class App extends Application {
         nextBtn.setOnAction(event -> {
             nextBtn.setDisable(true);
             //set typeGuide to next set
-            textField.setText("");
             if (textCounter.getText() != "6/6") {
-                textCounter.setText(String.format("%d/6", ++levelCounter));   
+                textCounter.setText(String.format("%d/6", ++levelCounter));
+                textField.setText(""); // go to next text sample in list
+
             }
         });
         
         resetBtn.setOnAction(event -> {
             nextBtn.setDisable(true);
-            //set typeGuide to first set
+            typeGuide.setText(text1);
             textField.setText("");
             textCounter.setText("1/6"); 
             levelCounter = 1;   
         });
         
         HBox topRow = new HBox();
-        topRow.getChildren().setAll(textField, textCounter);
+        topRow.getChildren().setAll(typeGuide, textCounter);
         
         HBox row1 = new HBox(5);
         row1.getChildren().setAll(backtickBtn, btn1, btn2, btn3,
@@ -134,10 +146,10 @@ public class App extends Application {
                 bBtn, nBtn, mBtn, commaBtn, periodBtn, forwardSlashBtn, rightShiftBtn, spacebarBtn);
         
         HBox row5 = new HBox(5);
-        row4.getChildren().setAll(spacebarBtn, nextBtn);
+        row5.getChildren().setAll(spacebarBtn, nextBtn);
          
         VBox root = new VBox(5);
-        root.getChildren().addAll(typeGuide, topRow, row1, row2, row3, row4, row5);
+        root.getChildren().addAll(topRow, textField, row1, row2, row3, row4, row5, statusLabel);
         var scene = new Scene(root, 900, 400);
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         stage.setScene(scene);
