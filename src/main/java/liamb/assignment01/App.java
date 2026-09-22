@@ -25,14 +25,16 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
+        //tracker labels
         Label rightText = new Label("Right: ");
         Label rightCount = new Label("0");
         rightCount.setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
-
+        
         Label wrongText = new Label(" Wrong: ");
         Label wrongCount = new Label("0");
         wrongCount.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
-
+        
+        //Hbox with all tracker labels
         HBox trackerBox = new HBox(rightText, rightCount, wrongText, wrongCount);
                 
         Label textCounter = new Label("1/6");
@@ -49,6 +51,7 @@ public class App extends Application {
         
         TextField textField = new TextField();
         
+        //all keyboard buttons
         Button backtickBtn = new Button("~ `");
 
         Button btn1 = new Button("!\n1");
@@ -116,6 +119,7 @@ public class App extends Application {
                 
         Button spacebarBtn = new Button("space");
         
+        //map for keycodes and hashmaps
         HashMap<KeyCode, Button> keyMap = new HashMap<>();
         keyMap.put(KeyCode.BACK_QUOTE, backtickBtn);
         keyMap.put(KeyCode.DIGIT1, btn1);
@@ -175,6 +179,7 @@ public class App extends Application {
         
         keyMap.put(KeyCode.SPACE, spacebarBtn);
         
+        //special keys style classes
         tabBtn.getStyleClass().add("key-tab");
         deleteBtn.getStyleClass().add("key-delete");
         capsLockBtn.getStyleClass().add("key-caps");
@@ -183,6 +188,7 @@ public class App extends Application {
         rightShiftBtn.getStyleClass().add("key-shift");
         spacebarBtn.getStyleClass().add("key-space");
         
+        //textfield listener to update right/wrong count and enable/disable next button
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             int correct = 0;
             int incorrect = 0;
@@ -204,7 +210,8 @@ public class App extends Application {
                 nextBtn.setDisable(true);
             }
         });
-           
+        
+        //next button event to update counter, textField, tracker and typeGuide
         nextBtn.setOnAction(event -> {
             nextBtn.setDisable(true);
             if (levelCounter < 6) {
@@ -217,6 +224,7 @@ public class App extends Application {
             }
         });
         
+        //reset button to clear tracker, textfield and reset typeGuide
         resetBtn.setOnAction(event -> {
             nextBtn.setDisable(true);
             levelCounter = 1;
@@ -227,6 +235,34 @@ public class App extends Application {
             wrongCount.setText("0");
         });
         
+        //textField event for key color on pressed and status label
+        textField.setOnKeyPressed(event -> {
+            KeyCode code = event.getCode();
+            
+            if (keyMap.containsKey(code)) {
+                Button btn = keyMap.get(code);
+                
+                if (!btn.getStyleClass().contains("pressed")) {
+                    btn.getStyleClass().add("pressed");
+                }
+                statusLabel.setText("Pressed: " + code.getName());
+                statusLabel.setStyle("-fx-text-fill: green;");
+            } else {
+                statusLabel.setText("Not handled");
+                statusLabel.setStyle("-fx-text-fill: red;");
+            }
+        });
+
+        //textfield event to reset key color on release
+        textField.setOnKeyReleased(event -> {
+            KeyCode code = event.getCode();
+            if (keyMap.containsKey(code)) {
+                Button btn = keyMap.get(code);
+                btn.getStyleClass().remove("pressed");
+            }
+        });
+        
+        //GUI formatting
         HBox topRow = new HBox(100);
         topRow.getChildren().setAll(typeGuide, trackerBox, textCounter);
         
@@ -257,33 +293,7 @@ public class App extends Application {
         VBox root = new VBox(5);
         root.getChildren().addAll(topRow, textField, row1, row2, row3, row4, row5, statusLabel);
         
-        var scene = new Scene(root, 900, 400);
-        
-        textField.setOnKeyPressed(event -> {
-            KeyCode code = event.getCode();
-            
-            if (keyMap.containsKey(code)) {
-                Button btn = keyMap.get(code);
-                
-                if (!btn.getStyleClass().contains("pressed")) {
-                    btn.getStyleClass().add("pressed");
-                }
-                statusLabel.setText("Pressed: " + code.getName());
-                statusLabel.setStyle("-fx-text-fill: green;");
-            } else {
-                statusLabel.setText("Not handled");
-                statusLabel.setStyle("-fx-text-fill: red;");
-            }
-        });
-
-        textField.setOnKeyReleased(event -> {
-            KeyCode code = event.getCode();
-            if (keyMap.containsKey(code)) {
-                Button btn = keyMap.get(code);
-                btn.getStyleClass().remove("pressed");
-            }
-        });
-        
+        var scene = new Scene(root, 900, 400);      
         textField.requestFocus();
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         stage.setScene(scene);
