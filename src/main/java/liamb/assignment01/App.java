@@ -48,6 +48,8 @@ public class App extends Application {
         Button resetBtn = new Button("reset");
         
         Label typeGuide = new Label(textSamples[0]);
+        typeGuide.setId("type-guide");
+        
         TextField textField = new TextField();
         
         Button backtickBtn = new Button("~ `");
