@@ -1,6 +1,5 @@
 package liamb.assignment01;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -9,15 +8,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class App extends Application {
     private static int levelCounter = 1;
-    private static String[] textSamples = {
+    private static final String[] textSamples = {
         "Try typing this text. Do it as quickly and accurately as you can.",
         "Next type another line of input data.",
         "The quick brown fox jumps over the lazy dog.",
@@ -230,7 +227,7 @@ public class App extends Application {
             wrongCount.setText("0");
         });
         
-        HBox topRow = new HBox(200);
+        HBox topRow = new HBox(100);
         topRow.getChildren().setAll(typeGuide, trackerBox, textCounter);
         
         HBox row1 = new HBox(5);
