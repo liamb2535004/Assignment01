@@ -17,16 +17,26 @@ import javafx.stage.Stage;
 public class App extends Application {
     private static int levelCounter = 1;
     private static String[] textSamples = {
-        "I just wanted to drop by and say hello to everyone in the room.",
-        "We are looking at a situation where everything needs to be redone from scratch.",
-        "My head was about to explode when I heard the final project deadline.",
-        "It is just one of those days where nothing seems to go right.",
-        "At the end of the day, we all want the exact same positive result for the team.",
-        "It is not a huge deal if we miss the early morning bus."
+        "Try typing this text. Do it as quickly and accurately as you can.",
+        "Next type another line of input data.",
+        "The quick brown fox jumps over the lazy dog.",
+        "Five big quacking zephyrs jolt my wax bed.",
+        "Sympathizing would fix Quaker objectives.",
+        "A large fawn jumped quickly over white zinc boxes."
     };
 
     @Override
     public void start(Stage stage) {
+        Label rightText = new Label("Right: ");
+        Label rightCount = new Label("0");
+        rightCount.setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
+
+        Label wrongText = new Label(" Wrong: ");
+        Label wrongCount = new Label("0");
+        wrongCount.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+
+        HBox trackerBox = new HBox(rightText, rightCount, wrongText, wrongCount);
+                
         Label textCounter = new Label("1/6");
         
         Label statusLabel = new Label("Press a key");
@@ -191,8 +201,8 @@ public class App extends Application {
             textCounter.setText("1/6"); 
         });
         
-        HBox topRow = new HBox(500);
-        topRow.getChildren().setAll(typeGuide, textCounter);
+        HBox topRow = new HBox(200);
+        topRow.getChildren().setAll(typeGuide, trackerBox, textCounter);
         
         HBox row1 = new HBox(5);
         row1.getChildren().setAll(backtickBtn, btn1, btn2, btn3,
