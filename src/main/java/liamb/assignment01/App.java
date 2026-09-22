@@ -16,17 +16,17 @@ import javafx.stage.Stage;
 
 public class App extends Application {
     private static int levelCounter = 1;
-    private static String text1 = "I just wanted to drop by and say hello to everyone in the room.";
-    private static String text2 = "We are looking at a situation where everything needs to be redone from scratch.";
-    private static String text3 = "My head was about to explode when I heard the final project deadline.";
-    private static String text4 = "It is just one of those days where nothing seems to go right.";
-    private static String text5 = "At the end of the day, we all want the exact same positive result for the team.";
-    private static String text6 = "It is not a huge deal if we miss the early morning bus.";
+    private static String[] textSamples = {
+        "I just wanted to drop by and say hello to everyone in the room.",
+        "We are looking at a situation where everything needs to be redone from scratch.",
+        "My head was about to explode when I heard the final project deadline.",
+        "It is just one of those days where nothing seems to go right.",
+        "At the end of the day, we all want the exact same positive result for the team.",
+        "It is not a huge deal if we miss the early morning bus."
+    };
 
     @Override
     public void start(Stage stage) {
-        //make a String list containing all text, so that the next button triggers
-        //the next set of text to be displayed
         Label textCounter = new Label("1/6");
         
         Label statusLabel = new Label("Press a key");
@@ -36,7 +36,7 @@ public class App extends Application {
         
         Button resetBtn = new Button("reset");
         
-        Label typeGuide = new Label(text1);
+        Label typeGuide = new Label(textSamples[0]);
         TextField textField = new TextField();
         
         Button backtickBtn = new Button("~ `");
@@ -165,29 +165,33 @@ public class App extends Application {
         
         keyMap.put(KeyCode.SPACE, spacebarBtn);
         
-        if (typeGuide.getText() == textField.getText()) {
-            nextBtn.setDisable(false);
-        }
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.equals(typeGuide.getText())) {
+                nextBtn.setDisable(false);
+            } else {
+                nextBtn.setDisable(true);
+            }
+        });
         
         nextBtn.setOnAction(event -> {
             nextBtn.setDisable(true);
-            //set typeGuide to next set
-            if (textCounter.getText() != "6/6") {
-                textCounter.setText(String.format("%d/6", ++levelCounter));
-                textField.setText(""); // go to next text sample in list
-
+            if (levelCounter < 6) {
+                typeGuide.setText(textSamples[levelCounter]);
+                levelCounter++;
+                textCounter.setText(String.format("%d/6", levelCounter));
+                textField.setText("");
             }
         });
         
         resetBtn.setOnAction(event -> {
             nextBtn.setDisable(true);
-            typeGuide.setText(text1);
+            levelCounter = 1;
+            typeGuide.setText(textSamples[0]);
             textField.setText("");
             textCounter.setText("1/6"); 
-            levelCounter = 1;   
         });
         
-        HBox topRow = new HBox();
+        HBox topRow = new HBox(500);
         topRow.getChildren().setAll(typeGuide, textCounter);
         
         HBox row1 = new HBox(5);
