@@ -176,13 +176,27 @@ public class App extends Application {
         keyMap.put(KeyCode.SPACE, spacebarBtn);
         
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.equals(typeGuide.getText())) {
+            int correct = 0;
+            int incorrect = 0;
+            String targetText = typeGuide.getText();
+
+            for (int i = 0; i < newValue.length(); i++) {
+                if (i < targetText.length() && newValue.charAt(i) == targetText.charAt(i)) {
+                    correct++;
+                } else {
+                    incorrect++;
+                }
+            }
+            rightCount.setText(String.valueOf(correct));
+            wrongCount.setText(String.valueOf(incorrect));
+
+            if (newValue.equals(targetText)) {
                 nextBtn.setDisable(false);
             } else {
                 nextBtn.setDisable(true);
             }
         });
-        
+           
         nextBtn.setOnAction(event -> {
             nextBtn.setDisable(true);
             if (levelCounter < 6) {
@@ -190,6 +204,8 @@ public class App extends Application {
                 levelCounter++;
                 textCounter.setText(String.format("%d/6", levelCounter));
                 textField.setText("");
+                rightCount.setText("0");
+                wrongCount.setText("0");
             }
         });
         
@@ -199,6 +215,8 @@ public class App extends Application {
             typeGuide.setText(textSamples[0]);
             textField.setText("");
             textCounter.setText("1/6"); 
+            rightCount.setText("0");
+            wrongCount.setText("0");
         });
         
         HBox topRow = new HBox(200);
