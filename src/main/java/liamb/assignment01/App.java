@@ -3,6 +3,7 @@ package liamb.assignment01;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -100,6 +101,7 @@ public class App extends Application {
         Button enterBtn = new Button("enter");
 
         Button leftShiftBtn = new Button("shift");
+        Button rightShiftBtn = new Button("shift"); //only for formatting (useless)
 
         Button zBtn = new Button("Z");
         Button xBtn = new Button("X");
@@ -112,7 +114,6 @@ public class App extends Application {
         Button commaBtn = new Button("<\n,");
         Button periodBtn = new Button(">\n.");
         Button forwardSlashBtn = new Button("?\n/");
-        Button rightShiftBtn = new Button("shift");
                 
         Button spacebarBtn = new Button("space");
         
@@ -175,6 +176,14 @@ public class App extends Application {
         
         keyMap.put(KeyCode.SPACE, spacebarBtn);
         
+        tabBtn.getStyleClass().add("key-tab");
+        deleteBtn.getStyleClass().add("key-delete");
+        capsLockBtn.getStyleClass().add("key-caps");
+        enterBtn.getStyleClass().add("key-enter");
+        leftShiftBtn.getStyleClass().add("key-shift");
+        rightShiftBtn.getStyleClass().add("key-shift");
+        spacebarBtn.getStyleClass().add("key-space");
+        
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             int correct = 0;
             int incorrect = 0;
@@ -223,22 +232,27 @@ public class App extends Application {
         topRow.getChildren().setAll(typeGuide, trackerBox, textCounter);
         
         HBox row1 = new HBox(5);
+        row1.setAlignment(Pos.CENTER);
         row1.getChildren().setAll(backtickBtn, btn1, btn2, btn3,
                 btn4, btn5, btn6, btn7, btn8, btn9, btn0, minusBtn, equalsBtn, deleteBtn);
         
         HBox row2 = new HBox(5);
+        row2.setAlignment(Pos.CENTER);
         row2.getChildren().setAll(tabBtn, qBtn, wBtn, eBtn, rBtn, tBtn,
                 yBtn, uBtn, iBtn, oBtn, pBtn, leftBracketBtn, rightBracketBtn, backslashBtn);
         
         HBox row3 = new HBox(5);
+        row3.setAlignment(Pos.CENTER);
         row3.getChildren().setAll(capsLockBtn, aBtn, sBtn, dBtn, fBtn,
                 gBtn, hBtn, jBtn, kBtn, lBtn, semiColonBtn, apostropheBtn, enterBtn);
         
         HBox row4 = new HBox(5);
+        row4.setAlignment(Pos.CENTER); 
         row4.getChildren().setAll(leftShiftBtn, zBtn, xBtn, cBtn, vBtn,
-                bBtn, nBtn, mBtn, commaBtn, periodBtn, forwardSlashBtn, rightShiftBtn, spacebarBtn);
+                bBtn, nBtn, mBtn, commaBtn, periodBtn, forwardSlashBtn, rightShiftBtn);
         
         HBox row5 = new HBox(5);
+        row5.setAlignment(Pos.CENTER);
         row5.getChildren().setAll(spacebarBtn, nextBtn, resetBtn);
          
         VBox root = new VBox(5);
