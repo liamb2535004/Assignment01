@@ -71,7 +71,7 @@ public class App extends Application {
 
         Button leftBracketBtn = new Button("{\n[");
         Button rightBracketBtn = new Button("}\n]");
-        Button backslashBtn = new Button("|\n'\'");
+        Button backslashBtn = new Button("|\n\\");
         
         Button capsLockBtn = new Button("caps lock"); //only for formatting (useless)
 
@@ -207,7 +207,7 @@ public class App extends Application {
                 bBtn, nBtn, mBtn, commaBtn, periodBtn, forwardSlashBtn, rightShiftBtn, spacebarBtn);
         
         HBox row5 = new HBox(5);
-        row5.getChildren().setAll(spacebarBtn, nextBtn);
+        row5.getChildren().setAll(spacebarBtn, nextBtn, resetBtn);
          
         VBox root = new VBox(5);
         root.getChildren().addAll(topRow, textField, row1, row2, row3, row4, row5, statusLabel);
