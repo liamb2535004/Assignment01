@@ -263,8 +263,8 @@ public class App extends Application {
         });
         
         //GUI formatting
-        HBox topRow = new HBox(100);
-        topRow.getChildren().setAll(typeGuide, trackerBox, textCounter);
+        HBox topRow = new HBox(50);
+        topRow.getChildren().setAll(textCounter, trackerBox, typeGuide);
         
         HBox row1 = new HBox(5);
         row1.setAlignment(Pos.CENTER);
