@@ -12,6 +12,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/*
+@Author Liam BOhdjalian
+*/
 public class App extends Application {
     private static int levelCounter = 1;
     private static final String[] textSamples = {
